@@ -40,8 +40,45 @@ public class Main {
         if (isPretty("dvszwmarrgswjxmb")) throw new Exception("test 5 bad");
     }
 
+
+    public static boolean hasLetterInBetween(String s){
+        if (s.length() == 2)
+            return false;
+
+        if (s.charAt(0) == s.charAt(2))
+            return true;
+
+        else
+            return hasLetterInBetween(s.substring(1));
+    }
+
+
+
+
+    public static boolean appearsTwice(String s){
+        if (s.length() == 1) return false;
+
+        String pattern = ""+s.charAt(0)+s.charAt(1);
+
+        if (s.substring(2).contains(pattern))
+            return true;
+        else
+            return appearsTwice(s.substring(1));
+    }
+
+    public static boolean isPretty2(String s){
+        return appearsTwice(s) && hasLetterInBetween(s);
+    }
+    public static void teste2() throws Exception {
+        if(!isPretty2("qjhvhtzxzqqjkmpb")) throw new Exception("test2 1 bad");
+        if(!isPretty2("xxyxx")) throw new Exception("teste2 2 bad");
+        if(isPretty2("uurcxstgmygtbstg")) throw new Exception("teste2 3 bad");
+        if(isPretty2("ieodomkazucvgmuy")) throw new Exception("teste2 4 bad");
+    }
+
     public static void main(String[] args) throws Exception {
         tests();
+        teste2();
 
         int qtyGood = 0;
         for (String line: Files.readAllLines(Paths.get("input.txt"))){
@@ -50,5 +87,13 @@ public class Main {
         }
 
         System.out.println(qtyGood);
+
+        int qtyGood2 = 0;
+        for (String line: Files.readAllLines(Paths.get("input.txt"))){
+            if (isPretty2(line))
+                qtyGood2++;
+        }
+
+        System.out.println(qtyGood2);
     }
 }
